@@ -16,8 +16,7 @@ import kotlinx.coroutines.flow.map
 import java.time.LocalDate
 import javax.inject.Inject
 
-@AndroidEntryPoint
-class TrackerRepositoryImpl @Inject constructor(
+class TrackerRepositoryImpl(
     private val foodAPI: FoodAPI,
     private val trackerAccessObject: TrackerAccessObject
 ): TrackerRepository {

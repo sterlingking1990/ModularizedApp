@@ -5,20 +5,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.project.core.navigation.Route
 import com.project.core.util.PreferenceInterface
 import com.project.core.util.UiEvent
-import com.project.tracker_domain.repository.TrackerRepository
 import com.project.tracker_domain.usecases.TrackerUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import java.time.DayOfWeek
-import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -71,6 +68,18 @@ class TrackerOverviewViewModel @Inject constructor(
                         }else it
                     }
                 )
+            }
+
+            is TrackerOverviewEvent.OnAddFood -> {
+                viewModelScope.launch {
+                    _uiEvent.send(UiEvent.Navigate(
+                        route = Route.SEARCH
+                                + "/${event.meal.mealType.name}"
+                                + "/${trackerState.date.dayOfMonth}"
+                                + "/${trackerState.date.monthValue}"
+                                + "/${trackerState.date.year}"
+                    ))
+                }
             }
         }
     }

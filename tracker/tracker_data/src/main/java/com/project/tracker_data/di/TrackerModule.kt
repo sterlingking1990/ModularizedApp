@@ -6,6 +6,7 @@ import com.project.tracker_data.local.TrackerFoodDBService
 import com.project.tracker_data.remote.FoodAPI
 import com.project.tracker_data.remote.TrackerRetrofit
 import com.project.tracker_data.repository.TrackerRepositoryImpl
+import com.project.tracker_domain.repository.TrackerRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,7 +43,7 @@ object TrackerModule {
     @Singleton
     fun provideTrackableRepository(
         trackerFoodDBService: TrackerFoodDBService,foodAPI: FoodAPI
-    ):TrackerRepositoryImpl{
+    ):TrackerRepository{
         return TrackerRepositoryImpl(foodAPI,trackerFoodDBService.trackerAccessObject)
     }
 
